@@ -1,0 +1,24 @@
+version: '2'
+services:
+    exercism-cli:
+        container_name: exercism_cli
+        build:
+            context: ./exercism-cli
+            args:
+                - API_KEY=YOUR_API_KEY
+        volumes_from:
+            - volume-source
+
+    volume-source:
+        container_name: exercism_source
+        build:
+            context: ./volumes/source
+        volumes:
+            - ./source:/opt/exercism
+
+    xphp:
+        container_name: exercism_xphp
+        build:
+            context: ./languages/php
+        volumes_from:
+            - volume-source
